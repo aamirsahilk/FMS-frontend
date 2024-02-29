@@ -786,7 +786,7 @@ const ViewBooking = ({ type }: ViewBookingProps) => {
   useEffect(() => {
     if (filterrouteData?.border && filterrouteData.border.length > 0) {
       const initialCharges: any = {};
-      filterrouteData.border?.forEach((border: any) => {
+      JSON.parse(filterrouteData.border).forEach((border: any) => {
         initialCharges[border?.border_id] = border.charges;
       });
       setBorderCharges(initialCharges);
@@ -1055,19 +1055,24 @@ const ViewBooking = ({ type }: ViewBookingProps) => {
 
   const addInvoice = async (e: any) => {
     e.preventDefault();
-
+  
+    
     try {
       if (consignment) {
+     
+        
         // Merge params and invoiceData
         // params.total_ammount = calculateTotalAmount();
-        const driverData = JSON.parse(bookingsData?.drivers || "");
+        const driverData = JSON.parse(JSON.parse(bookingsData?.drivers) || "");
 
-        const drivers = driverData?.map((item) => {
+        console.log('running', driverData);
+        const drivers = driverData?.map((item : any) => {
           return {
             ...item,
             waiting_amount: getWaitingAmount(item?.id),
           };
         });
+        // console.log('running', drivers);
         // const drivers:
         const requestData = {
           ...params,
@@ -1137,6 +1142,7 @@ const ViewBooking = ({ type }: ViewBookingProps) => {
       }
     } catch (error) {
       // Handle error
+      
     }
   };
 
@@ -1745,7 +1751,7 @@ const ViewBooking = ({ type }: ViewBookingProps) => {
                         <td className="border p-4">{i?.borderName}</td>
                         <td className="border p-4">{i?.type}</td>
                         <td className="border p-4">
-                          <input type="text" value={i?.charges || ""} />
+                          <input type="text" defaultValue={i?.charges || ""} />
                         </td>
                       </tr>
                     ))}

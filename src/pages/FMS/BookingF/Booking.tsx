@@ -614,14 +614,13 @@ const Booking = () => {
   useEffect(() => {
     if (filterrouteData?.border && filterrouteData.border.length > 0) {
       const initialCharges: any = {};
-      filterrouteData.border?.forEach((border: any) => {
+      JSON.parse(filterrouteData.border).forEach((border: any) => {
         initialCharges[border?.border_id] = border.charges;
       });
       setBorderCharges(initialCharges);
     }
   }, [filterrouteData]);
 
-  console.log(filterrouteData, "filterrouteData");
 
   const calculateTotalAmount = () => {
     const baseAmount = parseInt(params.route_fare) || 0;
@@ -1752,8 +1751,8 @@ const Booking = () => {
                                 </tr>
                               </thead>
                               <tbody>
-                                {Array.isArray(filterrouteData?.border)
-                                  ? filterrouteData?.border?.map((i: any) => (
+                                { 
+                                filterrouteData && JSON.parse(filterrouteData?.border).map((i: any) => (
                                     <tr key={i.borderName}>
                                       {/* Display data corresponding to the selected route */}
                                       <td className="border p-4">
@@ -1766,6 +1765,7 @@ const Booking = () => {
                                         {/* {addContactModal && !addInvoiceType && !viewInvoiceType ? (
                                                                                       <td>{i.charges}</td>
                                                                                   ) : addInvoiceType && addContactModal ? ( */}
+                                                                                  
                                         <input
                                           type="text"
                                           value={
@@ -1787,7 +1787,7 @@ const Booking = () => {
                                       {/* Add more cells as needed */}
                                     </tr>
                                   ))
-                                  : ""}
+                                  }
                               </tbody>
                             </table>
                           </div>
