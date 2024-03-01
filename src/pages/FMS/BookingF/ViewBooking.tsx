@@ -413,10 +413,13 @@ const ViewBooking = ({ type }: ViewBookingProps) => {
             ...params,
             ...invoiceData,
             isPaid: true,
-            // borderCharges: Object.values(borderCharges)[0], // Extract the value from the object
+            borderCharges: Object.values(borderCharges)[0],
+            // borderCharges: borderCharges,
             // invoiceId: 11,
             total_ammount: calculateTotalAmount(),
           };
+          
+          
 
           const formData: any = new FormData();
 
@@ -1080,7 +1083,8 @@ const ViewBooking = ({ type }: ViewBookingProps) => {
           ...invoiceData,
           isPaid: true,
           customer_id: bookingsData?.customer_id,
-          borderCharges: Object.values(borderCharges)[0], // Extract the value from the object
+          // borderCharges: Object.values(borderCharges)[0],  
+          borderCharges: JSON.stringify(borderCharges),  
           invoiceId: generateInvoiceNumber(),
           total_ammount: getTotalBookingAmount(),
           drivers: JSON.stringify(drivers),
@@ -1745,13 +1749,26 @@ const ViewBooking = ({ type }: ViewBookingProps) => {
                     </tr>
                   </thead>
                   <tbody>
+                    
                     {JSON.parse(bookingsData?.border_Route?.border).map((i: any) => (
                       <tr key={i.borderName}>
                         {/* Display data corresponding to the selected route */}
                         <td className="border p-4">{i?.borderName}</td>
                         <td className="border p-4">{i?.type}</td>
                         <td className="border p-4">
-                          <input type="text" defaultValue={i?.charges || ""} />
+                          fff
+                          <input
+                          type="text"
+                          defaultValue={i?.charges || ""}
+                          onChange={(e) =>{
+                                setBorderCharges((prevCharges: any) => ({
+                                  ...prevCharges,
+                                  [i.border_id]: e.target.value,
+                                }))
+                                console.log('border-charges', borderCharges, e.target.value);
+                                
+                          }}
+                            />
                         </td>
                       </tr>
                     ))}

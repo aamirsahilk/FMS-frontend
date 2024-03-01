@@ -1751,6 +1751,7 @@ const Booking = () => {
                                 </tr>
                               </thead>
                               <tbody>
+                                {JSON.stringify(filterrouteData?.border)}
                                 { 
                                 filterrouteData && JSON.parse(filterrouteData?.border).map((i: any) => (
                                     <tr key={i.borderName}>
