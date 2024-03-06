@@ -225,6 +225,14 @@ const ViewBooking = ({ type }: ViewBookingProps) => {
     console.log(totalRouteFare, "88888888888");
   };
 
+  const calculateDriverTotalAmount = (selectedDriverData, d) => { 
+    const totalAmount = Number(totalBorderCharges || 0) +
+      Number(getDriverBuyingAmount(d.driver_id)) +
+      Number(selectedDriverData.find(e=>e.driver_id === d.driver_id).waiting_amount || 0)
+    
+      return totalAmount;
+  }
+
   const openModal = (contact: any = null) => {
     const json = JSON.parse(JSON.stringify(defaultParams));
     setParams(json);
@@ -340,6 +348,9 @@ const ViewBooking = ({ type }: ViewBookingProps) => {
     );
 
     setBookingsData(bookings?.data);
+
+    setTotalBorderCharges(bookings?.data?.all_border_fare)
+    setBorderCharges(JSON.parse(JSON.parse(bookings?.data?.border_charges)))
 
     const invoicDatas = await axios.get(`${config.API_BASE_URL}/invoice`);
     setInvoiceDataAll(invoicDatas?.data);
@@ -810,7 +821,8 @@ const ViewBooking = ({ type }: ViewBookingProps) => {
 
   useEffect(() => {
     let totalSum = 0;
-
+    console.log('borderCharges', borderCharges);
+    
     for (let key in borderCharges) {
       // Convert string values to integers before adding
       totalSum += parseInt(borderCharges[key]);
@@ -1615,7 +1627,8 @@ const ViewBooking = ({ type }: ViewBookingProps) => {
                                   // onChange={(e: any) =>
                                   //   handleChangeDriverAmt(e, d.driver_id)
                                   // }
-                                  value={bookingsData?.all_border_fare}
+                                  value={totalBorderCharges}
+                                  // value={bookingsData?.all_border_fare}
                                   type="number"
                                   placeholder="total"
                                   className="form-input"
@@ -1640,7 +1653,6 @@ const ViewBooking = ({ type }: ViewBookingProps) => {
                                           },
                                         }
                                       );
-
                                       setSelectedDriverData(updatedData);
                                     }}
                                     value={bookingsData?.waiting_amount}
@@ -1659,8 +1671,7 @@ const ViewBooking = ({ type }: ViewBookingProps) => {
                                   name="test"
                                   // onChange={}
                                   value={
-                                    Number(bookingsData?.all_border_fare || 0) +
-                                    Number(getDriverBuyingAmount(d.driver_id))
+                                    calculateDriverTotalAmount(selectedDriverData, d)
                                   }
                                   type="number"
                                   placeholder="total"
@@ -1749,7 +1760,9 @@ const ViewBooking = ({ type }: ViewBookingProps) => {
                     </tr>
                   </thead>
                   <tbody>
-                    
+
+                    {/* {JSON.stringify(bookingsData?.border_charges)}
+                    {JSON.stringify(bookingsData?.border_Route?.border)} */}
                     {JSON.parse(bookingsData?.border_Route?.border).map((i: any) => (
                       <tr key={i.borderName}>
                         {/* Display data corresponding to the selected route */}
@@ -1759,7 +1772,7 @@ const ViewBooking = ({ type }: ViewBookingProps) => {
                           fff
                           <input
                           type="text"
-                          defaultValue={i?.charges || ""}
+                          defaultValue={JSON.parse(JSON.parse(bookingsData?.border_charges))[i?.border_id] || ""}
                           onChange={(e) =>{
                                 setBorderCharges((prevCharges: any) => ({
                                   ...prevCharges,
@@ -1802,7 +1815,8 @@ const ViewBooking = ({ type }: ViewBookingProps) => {
                 id="border_charges_total"
                 name="border_charges_total"
                 // onChange={(e) => changeValue(e)}
-                value={bookingsData?.all_border_fare}
+                // value={bookingsData?.all_border_fare}
+                value={totalBorderCharges}
                 type="number"
                 className="form-input"
                 required

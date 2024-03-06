@@ -235,26 +235,23 @@ const Booking = () => {
             data
           );
 
-          const updatePromises = Object?.entries(borderCharges).map(
-            async ([borderId, newValue]) => {
-              try {
-                const response = await axios.put(
-                  `${config.API_BASE_URL}/routes/border/charges/${borderId}`,
-                  {
-                    // Assuming you want to update a specific property, replace 'propertyName' with the actual property name
-                    charges: newValue,
-                  }
-                );
+          // const updatePromises = Object?.entries(borderCharges).map(
+          //   async ([borderId, newValue]) => {
+          //     try {
+          //       const response = await axios.put(
+          //         `${config.API_BASE_URL}/routes/border/charges/${borderId}`,
+          //         {
+          //           charges: newValue,
+          //         }
+          //       );
 
-                if (response.status === 200 || response.status === 204) {
-                  // Additional logic if needed
-                }
-              } catch (error) {
-                // Handle errors if needed
-              }
-            }
-          );
-          const result = await Promise.all(updatePromises);
+          //       if (response.status === 200 || response.status === 204) {
+          //       }
+          //     } catch (error) {
+          //     }
+          //   }
+          // );
+          // const result = await Promise.all(updatePromises);
 
           showMessage("Invoice Add successful");
           setConsignment(null);
@@ -369,26 +366,26 @@ const Booking = () => {
             // Handle error as needed
           }
         }
-        const updatePromises = Object?.entries(borderCharges).map(
-          async ([borderId, newValue]) => {
-            try {
-              const response = await axios.put(
-                `${config.API_BASE_URL}/routes/border/charges/${borderId}`,
-                {
-                  // Assuming you want to update a specific property, replace 'propertyName' with the actual property name
-                  charges: newValue,
-                }
-              );
+        // const updatePromises = Object?.entries(borderCharges).map(
+        //   async ([borderId, newValue]) => {
+        //     try {
+        //       const response = await axios.put(
+        //         `${config.API_BASE_URL}/routes/border/charges/${borderId}`,
+        //         {
+                 
+        //           charges: newValue,
+        //         }
+        //       );
 
-              if (response.status === 200 || response.status === 204) {
-                // Additional logic if needed
-              }
-            } catch (error) {
-              // Handle errors if needed
-            }
-          }
-        );
-        const result = await Promise.all(updatePromises);
+        //       if (response.status === 200 || response.status === 204) {
+              
+        //       }
+        //     } catch (error) {
+              
+        //     }
+        //   }
+        // );
+        // const result = await Promise.all(updatePromises);
       }
 
       setAddContactModal(false);
@@ -1689,6 +1686,7 @@ const Booking = () => {
 
                       <div className="mt-4">
                         <div>
+                          {/* {JSON.stringify(invoiceData?.borderCharges)} */}
                           <label htmlFor="">Select Route Name</label>
                           <select
                             name="route_id"
@@ -1751,7 +1749,7 @@ const Booking = () => {
                                 </tr>
                               </thead>
                               <tbody>
-                                {JSON.stringify(filterrouteData?.border)}
+                                {/* {JSON.stringify(filterrouteData?.border)} */}
                                 { 
                                 filterrouteData && JSON.parse(filterrouteData?.border).map((i: any) => (
                                     <tr key={i.borderName}>
@@ -1770,13 +1768,13 @@ const Booking = () => {
                                         <input
                                           type="text"
                                           value={
-                                            borderCharges[i?.border_id] || ""
+                                            JSON.parse(invoiceData?.borderCharges)[i?.border_id] || ""
                                           }
                                           onChange={(e) =>
                                             setBorderCharges(
                                               (prevCharges: any) => ({
                                                 ...prevCharges,
-                                                [i.border_id]: e.target.value,
+                                                [i.border_id]:e.target.value,
                                               })
                                             )
                                           }

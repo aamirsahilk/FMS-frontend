@@ -303,26 +303,26 @@ const NewBooking = ({ type }: NewBookingProps) => {
             data
           );
 
-          const updatePromises = Object?.entries(borderCharges).map(
-            async ([borderId, newValue]) => {
-              try {
-                const response = await axios.put(
-                  `${config.API_BASE_URL}/routes/border/charges/${borderId}`,
-                  {
-                    // Assuming you want to update a specific property, replace 'propertyName' with the actual property name
-                    charges: newValue,
-                  }
-                );
+          // const updatePromises = Object?.entries(borderCharges).map(
+          //   async ([borderId, newValue]) => {
+          //     try {
+          //       const response = await axios.put(
+          //         `${config.API_BASE_URL}/routes/border/charges/${borderId}`,
+          //         {
+                    
+          //           charges: newValue,
+          //         }
+          //       );
 
-                if (response.status === 200 || response.status === 204) {
-                  // Additional logic if needed
-                }
-              } catch (error) {
-                // Handle errors if needed
-              }
-            }
-          );
-          const result = await Promise.all(updatePromises);
+          //       if (response.status === 200 || response.status === 204) {
+                 
+          //       }
+          //     } catch (error) {
+            
+          //     }
+          //   }
+          // );
+          // const result = await Promise.all(updatePromises);
 
           showMessage("Invoice Add successful");
           setConsignment(null);
@@ -393,6 +393,7 @@ const NewBooking = ({ type }: NewBookingProps) => {
           )
         : calculateTotalAmount();
         data.all_border_fare = totalBorderCharges || 0;
+        data.border_charges = JSON.stringify(borderCharges) || 0;
         // data.drivers = params.drivers
 
         if (
@@ -468,26 +469,26 @@ const NewBooking = ({ type }: NewBookingProps) => {
             // Handle error as needed
           }
         }
-        const updatePromises = Object?.entries(borderCharges).map(
-          async ([borderId, newValue]) => {
-            try {
-              const response = await axios.put(
-                `${config.API_BASE_URL}/routes/border/charges/${borderId}`,
-                {
-                  // Assuming you want to update a specific property, replace 'propertyName' with the actual property name
-                  charges: newValue,
-                }
-              );
+        // const updatePromises = Object?.entries(borderCharges).map(
+        //   async ([borderId, newValue]) => {
+        //     try {
+        //       const response = await axios.put(
+        //         `${config.API_BASE_URL}/routes/border/charges/${borderId}`,
+        //         {
+                 
+        //           charges: newValue,
+        //         }
+        //       );
 
-              if (response.status === 200 || response.status === 204) {
-                // Additional logic if needed
-              }
-            } catch (error) {
-              // Handle errors if needed
-            }
-          }
-        );
-        const result = await Promise.all(updatePromises);
+        //       if (response.status === 200 || response.status === 204) {
+               
+        //       }
+        //     } catch (error) {
+              
+        //     }
+        //   }
+        // );
+        // const result = await Promise.all(updatePromises);
       }
 
       setAddContactModal(false);
@@ -1332,7 +1333,7 @@ const NewBooking = ({ type }: NewBookingProps) => {
                     </tr>
                   </thead>
                   <tbody>
-                    
+                  
                     {JSON.parse(filterrouteData.border).map((i: any) => (
                           <tr key={i.borderName}>
                             {/* Display data corresponding to the selected route */}
@@ -1340,8 +1341,8 @@ const NewBooking = ({ type }: NewBookingProps) => {
                             <td className="border p-4">{i?.type}</td>
                             <td className="border p-4">
                               {/* {addContactModal && !addInvoiceType && !viewInvoiceType ? (
-                                                                                      <td>{i.charges}</td>
-                                                                                  ) : addInvoiceType && addContactModal ? ( */}
+                                      <td>{i.charges}</td>
+                                  ) : addInvoiceType && addContactModal ? ( */}
                               <input
                                 type="text"
                                 value={borderCharges[i?.border_id] || ""}
