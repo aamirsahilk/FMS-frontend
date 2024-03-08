@@ -660,14 +660,15 @@ const NewBooking = ({ type }: NewBookingProps) => {
   // console.log(selectedValues, "Selected Value" , updatedDriver);
 
   useEffect(() => {
+    
     if (filterrouteData?.border && filterrouteData.border.length > 0) {
       const initialCharges: any = {};
-      JSON.parse(filterrouteData.border).forEach((border: any) => {
+      
+      filterrouteData?.border.forEach((border: any) => {
         initialCharges[border?.border_id] = border.charges;
       });
       setBorderCharges(initialCharges);
     }
-
     const updatedDriver = driverTotal.filter((item: any) =>
       selectedValues.includes(item.id)
     );
@@ -1289,9 +1290,13 @@ const NewBooking = ({ type }: NewBookingProps) => {
                   const selectedRouteData = routeData.find(
                     (route: any) => route.route_id === parseInt(params.route_id)
                   );
+                  console.log('dde', selectedRouteData);
+                  
                   setFilterrouteData(selectedRouteData);
                   console.log(selectedRouteData, "selectedRouteData");
                   params.route_fare = selectedRouteData.totalFare;
+                  console.log('sss15125', selectedRouteData.border);
+                  
                   const all_border_fare = Array.isArray(
                     selectedRouteData.borders
                   )
@@ -1333,10 +1338,11 @@ const NewBooking = ({ type }: NewBookingProps) => {
                     </tr>
                   </thead>
                   <tbody>
-                  
-                    {JSON.parse(filterrouteData.border).map((i: any) => (
+
+                    {
+                    filterrouteData?.border.map((i: any) => (
                           <tr key={i.borderName}>
-                            {/* Display data corresponding to the selected route */}
+                            
                             <td className="border p-4">{i?.borderName}</td>
                             <td className="border p-4">{i?.type}</td>
                             <td className="border p-4">
@@ -1357,7 +1363,7 @@ const NewBooking = ({ type }: NewBookingProps) => {
                                                                                       <td>{invoiceData?.borderCharges}</td>
                                                                                   )} */}
                             </td>
-                            {/* Add more cells as needed */}
+                    
                           </tr>
                         ))
                       }
