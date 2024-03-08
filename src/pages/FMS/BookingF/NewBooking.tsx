@@ -705,7 +705,7 @@ const NewBooking = ({ type }: NewBookingProps) => {
     <div>
       <div className="flex items-center justify-between flex-wrap gap-4">
         <h2 className="text-xl ml-10">
-          {IS_EDIT ? "Edit Booking Details" : "Add Booking Details"}
+          {IS_EDIT ? "Edit Booking Details" : "Add Booking Details1"}
         </h2>
         <div className="flex sm:flex-row flex-col sm:items-center sm:gap-3 gap-4 w-full sm:w-auto "></div>
       </div>
