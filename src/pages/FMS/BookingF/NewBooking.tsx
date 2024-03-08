@@ -1338,7 +1338,6 @@ const NewBooking = ({ type }: NewBookingProps) => {
                     </tr>
                   </thead>
                   <tbody>
-
                     {
                     filterrouteData?.border.map((i: any) => (
                           <tr key={i.borderName}>

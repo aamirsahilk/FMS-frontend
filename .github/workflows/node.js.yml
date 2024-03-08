@@ -9,12 +9,8 @@ on:
 jobs:
   build:
 
-    runs-on: ubuntu-latest
-
-    strategy:
-      matrix:
-        node-version: [12.x]
-
+    runs-on: self-hosted
+    
     steps:
     - name: Checkout repository
       uses: actions/checkout@v2
