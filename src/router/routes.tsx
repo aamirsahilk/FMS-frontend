@@ -32,7 +32,7 @@ import DriverBookingReport from "../pages/FMS/ReportF/DriverBookingReport";
 import NewBooking from "../pages/FMS/BookingF/NewBooking";
 import ViewBooking from "../pages/FMS/BookingF/ViewBooking";
 import DriverReport from "../pages/FMS/ReportF/DriverReport";
-import CustomerReport from "../pages/FMS/ReportF/customerReport";
+import CustomerReport from "../pages/FMS/ReportF/CustomerReport";
 
 const Index = lazy(() => import("../pages/Index"));
 const Analytics = lazy(() => import("../pages/Analytics"));

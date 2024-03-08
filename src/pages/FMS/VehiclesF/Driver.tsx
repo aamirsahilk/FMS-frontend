@@ -19,7 +19,11 @@ import { useFormik } from "formik";
 import * as Yup from "yup";
 import moment from "moment";
 
-const Driver = () => {
+interface ValuesType {
+  status?: string; 
+}
+
+const Driver = ({ status }: ValuesType) => {
   const dispatch = useDispatch();
   const [defaultParams] = useState({
     name: "",
@@ -239,7 +243,7 @@ const Driver = () => {
           } else {
           }
         } else {
-          delete values.status;
+            delete values.status;
           const Data = await axios.post(
             `${config.API_BASE_URL}/drivers`,
             values

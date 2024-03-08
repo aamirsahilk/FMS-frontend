@@ -697,7 +697,7 @@ const NewBooking = ({ type }: NewBookingProps) => {
   );
 
   const selectedClient = clientData?.find(
-    (client) => client?.client_id === params?.client_id
+    (client:any) => client?.client_id === params?.client_id
   );
 
   return (

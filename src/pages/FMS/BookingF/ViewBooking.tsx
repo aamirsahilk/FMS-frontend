@@ -225,10 +225,10 @@ const ViewBooking = ({ type }: ViewBookingProps) => {
     console.log(totalRouteFare, "88888888888");
   };
 
-  const calculateDriverTotalAmount = (selectedDriverData, d) => { 
+  const calculateDriverTotalAmount = (selectedDriverData:any, d:any) => { 
     const totalAmount = Number(totalBorderCharges || 0) +
       Number(getDriverBuyingAmount(d.driver_id)) +
-      Number(selectedDriverData.find(e=>e.driver_id === d.driver_id).waiting_amount || 0)
+      Number(selectedDriverData.find((e: any)=>e.driver_id === d.driver_id).waiting_amount || 0)
     
       return totalAmount;
   }
@@ -275,9 +275,15 @@ const ViewBooking = ({ type }: ViewBookingProps) => {
         amount: string;
         id: number;
         name: string;
-      }[] = JSON.parse(bookingsData?.drivers);
+      }[] = bookingsData?.drivers ? JSON.parse(bookingsData?.drivers) : [];
+    // if (bookingsData?.drivers) {
+    //   const drivers: {
+    //     amount: string;
+    //     id: number;
+    //     name: string;
+    //   }[] = JSON.parse(bookingsData?.drivers);
 
-      handleSelectChange(JSON.parse(drivers)?.map(({ id }) => id));
+      handleSelectChange(drivers?.map(({ id }) => id));
       // console.log("Driver", drivers);
     }
   }, [bookingsData]);
@@ -288,8 +294,8 @@ const ViewBooking = ({ type }: ViewBookingProps) => {
         amount: number;
         id: number;
         name: string;
-      }[] = JSON.parse(bookingsData?.drivers);
-      const foundAmount = JSON.parse(drivers)?.find(({ id }) => id)?.amount;
+      }[] = bookingsData?.drivers ? JSON.parse(bookingsData?.drivers) : [];
+      const foundAmount = drivers?.find(({ id }) => id)?.amount;
 
       return foundAmount || 0;
     } else {
@@ -304,18 +310,18 @@ const ViewBooking = ({ type }: ViewBookingProps) => {
         id: number;
         name: string;
         waiting_amount: number;
-      }[] = JSON.parse(bookingsData?.drivers);
+      }[] = bookingsData?.drivers?JSON.parse(bookingsData?.drivers):[];
 
       let totalDriversBuying = 0;
 
-      JSON.parse(drivers)?.forEach(({ amount, waiting_amount }) => {
+      drivers?.forEach(({ amount, waiting_amount }) => {
         totalDriversBuying +=
           Number(amount) +
           Number(bookingsData?.all_border_fare || 0) +
           Number(waiting_amount ? waiting_amount : 0);
       });
 
-      selectedDriverData?.forEach((data) => {
+      selectedDriverData?.forEach((data : any) => {
         totalDriversBuying += Number(data?.waiting_amount || 0);
       });
 
@@ -1061,9 +1067,9 @@ const ViewBooking = ({ type }: ViewBookingProps) => {
     return bookingNumber;
   }
 
-  const getWaitingAmount = (id) => {
+  const getWaitingAmount = (id: any) => {
     return (
-      selectedDriverData?.find((data) => data?.driver_id === id)
+      selectedDriverData?.find((data: any) => data?.driver_id === id)
         ?.waiting_amount || 0
     );
   };

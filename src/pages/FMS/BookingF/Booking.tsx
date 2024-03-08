@@ -765,7 +765,7 @@ const Booking = () => {
   const getWaitingAmount = (id: any) => {
     const drivers = JSON.parse(filterDriverData?.drivers);
 
-    return drivers?.find((data) => data?.driver_id === id)?.waiting_amount;
+    return drivers?.find((data:any) => data?.driver_id === id)?.waiting_amount;
   };
   return (
     <div>
@@ -2255,10 +2255,7 @@ const Booking = () => {
                             <td className="py-2 px-4 border-b text-center  border-gray-200">
                               {row.name}
                             </td>
-                            {console.log(
-                              "filterDriverData>>",
-                              filterDriverData
-                            )}
+                            
                             <td className="py-2 px-4 border-b text-center border-gray-200">
                               {row.Driver_Payable}
                             </td>
