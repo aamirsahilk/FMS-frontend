@@ -2,15 +2,15 @@ name: React CI/CD
 
 on:
   push:
-    branches: [ master ]
+    branches: [ main ]
   pull_request:
-    branches: [ master ]
+    branches: [ main ]
 
 jobs:
   build:
 
     runs-on: self-hosted
-    
+
     steps:
     - name: Checkout repository
       uses: actions/checkout@v2
