@@ -643,7 +643,7 @@ const Booking = () => {
 
     const filterDriver = [];
 
-    const driver = JSON.parse(JSON.parse(selectedBooking?.drivers));
+    const driver = JSON.parse(selectedBooking?.drivers);
     
     for (const id in driver) {
       const waitingAmt = parseInt(driver[id].Waiting_Amount)
@@ -679,7 +679,6 @@ const Booking = () => {
       totalAmount,
       paidAmount,
       filterDriver,
-      "....................................................."
     );
 
     switch (type) {
@@ -714,7 +713,7 @@ const Booking = () => {
     const FindDriver = [];
     const filterDriver = [];
 
-    const driver = JSON.parse(JSON.parse(selectedBooking?.drivers));
+    const driver = JSON.parse(selectedBooking?.drivers);
     for (const id in driver) {
       console.log(
         driver[id],
@@ -888,7 +887,7 @@ const Booking = () => {
               </thead>
               <tbody>
                 {filteredBookingsData?.map((contact: any, index: any) => {
-                  console.log('drivers', JSON.parse(JSON.parse(contact.drivers)));
+ 
 
                   return (
                     <tr key={contact.id}>
@@ -913,7 +912,7 @@ const Booking = () => {
                             onClick={() => viewDriver(contact.new_booking_id)}
                           >
                 
-                            {JSON.parse(JSON.parse(contact.drivers)).length}
+                            {JSON.parse(contact.drivers).length}
                           </button>
                         </div>
                       </td>
@@ -2249,6 +2248,7 @@ const Booking = () => {
                         </tr>
                       </thead>
                       <tbody>
+                        {/* {JSON.stringify(filterDriverData)} */}
                         {filterDriverData.map((row: any) => (
                           <tr key={row.id}>
                             {/* <td className="py-2 px-4 border-b border-gray-200">{row.id}</td> */}
