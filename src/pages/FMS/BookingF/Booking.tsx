@@ -605,13 +605,15 @@ const Booking = () => {
     const selectedRouteData = routeData.find(
       (route: any) => route.route_id === parseInt(params.route_id)
     );
+   
+      
     setFilterrouteData(selectedRouteData);
   }, [params.route_id]);
 
   useEffect(() => {
     if (filterrouteData?.border && filterrouteData.border.length > 0) {
       const initialCharges: any = {};
-      JSON.parse(filterrouteData.border).forEach((border: any) => {
+     filterrouteData.border.forEach((border: any) => {
         initialCharges[border?.border_id] = border.charges;
       });
       setBorderCharges(initialCharges);
@@ -1276,7 +1278,8 @@ const Booking = () => {
                                   </option>
                                 ))}
                               </select>
-
+                                  {/* {JSON.stringify(driverData)}
+                                  dvf{JSON.stringify(params)} */}
                               {driverData.map((d: any) =>
                                 d.driver_id === parseInt(params.driver_id) ? (
                                   <div>
@@ -1750,7 +1753,7 @@ const Booking = () => {
                               <tbody>
                                 {/* {JSON.stringify(filterrouteData?.border)} */}
                                 { 
-                                filterrouteData && JSON.parse(filterrouteData?.border).map((i: any) => (
+                                filterrouteData && filterrouteData?.border.map((i: any) => (
                                     <tr key={i.borderName}>
                                       {/* Display data corresponding to the selected route */}
                                       <td className="border p-4">

@@ -198,14 +198,18 @@ const Transaction = () => {
 
   const viewUser = async (user: any = null) => {
     const json = JSON.parse(JSON.stringify(defaultParams));
+    
     if (user) {
       let json1 = JSON.parse(JSON.stringify(user));
+      console.log('user', json1);
       setParams(json1);
       formik.setValues(json1);
+      Driverdata(json1);
     }
     setAddContactModal(true);
     setViewMode(true);
-    Driverdata();
+    // alert();
+    
   };
 
   const showMessage = (msg = "", type = "success") => {
@@ -404,19 +408,19 @@ const Transaction = () => {
     return drivers?.find((driver: any) => driver?.driver_id === id)?.name || "";
   };
 
-  async function Driverdata() {
+  async function Driverdata(json) {
 
-    console.log("userData>>>", userData);
-
+    // console.log(userData, 'find', json.bookings, formik.values.bookings);
+    const value = json ? json.bookings : formik.values.bookings;
     const selectedBooking = userData.find(
-      (id: any) => id?.new_booking_id === formik.values.bookings
-    );
+      (id: any) => id?.new_booking_id === value
+      );
+      
+      if (!selectedBooking) {
+        return;
+      }
 
-    if (!selectedBooking) {
-      return;
-    }
-
-    const driver = JSON.parse(JSON.parse(selectedBooking?.drivers));
+    const driver = JSON.parse(selectedBooking?.drivers);
 
     console.log("driver>>>", driver);
 
@@ -710,7 +714,7 @@ const Transaction = () => {
                         </div>
                         <div className="mr-5">
                           <label htmlFor="routename">Select Booking ID</label>
-
+                            {/* {JSON.stringify(formik.values.bookings)} */}
                           <ReactSelect
                             name="bookings"
                             id="bookings"
@@ -730,7 +734,8 @@ const Transaction = () => {
                               value: formik.values.bookings,
                             }}
                             onChange={(e) => {
-                              formik.values.bookings = e?.value;
+                              // formik.values.bookings = e?.value;
+                              formik.setFieldValue('bookings', e?.value);
                               userData?.map((v: any) => {
                                 if (
                                   v.new_booking_id === formik.values.bookings
@@ -932,7 +937,7 @@ const Transaction = () => {
                             </tr>
                           </thead>
                           <tbody>
-                              {/* {JSON.stringify(filterDriverData)} */}
+                              {JSON.stringify(filterDriverData)}
                             {filterDriverData &&
                               filterDriverData?.length > 0 &&
                               filterDriverData.map((row: any, index) => (

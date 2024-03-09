@@ -352,11 +352,13 @@ const ViewBooking = ({ type }: ViewBookingProps) => {
     const bookings = await axios.get(
       `${config.API_BASE_URL}/bookings/${booking_id}`
     );
-
+      console.log('booking data', bookings?.data);
+      
     setBookingsData(bookings?.data);
 
     setTotalBorderCharges(bookings?.data?.all_border_fare)
-    setBorderCharges(JSON.parse(JSON.parse(bookings?.data?.border_charges)))
+    
+    setBorderCharges(JSON.parse(bookings?.data?.border_charges))
 
     const invoicDatas = await axios.get(`${config.API_BASE_URL}/invoice`);
     setInvoiceDataAll(invoicDatas?.data);
@@ -1084,7 +1086,7 @@ const ViewBooking = ({ type }: ViewBookingProps) => {
         
         // Merge params and invoiceData
         // params.total_ammount = calculateTotalAmount();
-        const driverData = JSON.parse(JSON.parse(bookingsData?.drivers) || "");
+        const driverData = JSON.parse(bookingsData?.drivers || "");
 
         console.log('running', driverData);
         const drivers = driverData?.map((item : any) => {
@@ -1769,16 +1771,16 @@ const ViewBooking = ({ type }: ViewBookingProps) => {
 
                     {/* {JSON.stringify(bookingsData?.border_charges)}
                     {JSON.stringify(bookingsData?.border_Route?.border)} */}
-                    {JSON.parse(bookingsData?.border_Route?.border).map((i: any) => (
+                    {bookingsData?.border_Route?.border.map((i: any) => (
                       <tr key={i.borderName}>
                         {/* Display data corresponding to the selected route */}
                         <td className="border p-4">{i?.borderName}</td>
                         <td className="border p-4">{i?.type}</td>
                         <td className="border p-4">
-                          fff
+                          {/* fff */}
                           <input
                           type="text"
-                          defaultValue={JSON.parse(JSON.parse(bookingsData?.border_charges))[i?.border_id] || ""}
+                          defaultValue={JSON.parse(bookingsData?.border_charges)[i?.border_id] || ""}
                           onChange={(e) =>{
                                 setBorderCharges((prevCharges: any) => ({
                                   ...prevCharges,
